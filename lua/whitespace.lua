@@ -144,11 +144,9 @@ M.create_autocmd = function()
 		{
 			group = vim.api.nvim_create_augroup('whitespace0', {clear = true}),
 			callback = function(arg)
-				vim.schedule(function()
-				-- use `vim.schedule` because:
-				-- https://github.com/neovim/neovim/issues/29419
-				----------------------------------------------------------------
 				if H.excluded_filetype_p() or H.excluded_buftype_p() then
+				-- `buftype=terminal` may not work now
+				-- https://github.com/neovim/neovim/issues/29419
 					M.set_status0()
 					M.match_sync()
 					return
@@ -189,8 +187,6 @@ M.create_autocmd = function()
 							M.match_sync()
 						end,
 					})
-				----------------------------------------------------------------
-				end)
 			end,
 		})
 end
