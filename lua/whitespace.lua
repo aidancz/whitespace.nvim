@@ -29,13 +29,15 @@ end
 -- # config
 
 M.config = {
-	excluded_filetypes = {},
-	excluded_buftypes = {".+"},
+	excluded_filetypes = {
+	},
+	excluded_buftypes = {
+	},
 	init_switches = {
-		false,
-		false,
-		false,
-		true,
+		whitespace_switch_1 = false,
+		whitespace_switch_2 = false,
+		whitespace_switch_3 = false,
+		whitespace_switch_4 = true,
 	},
 }
 -- whitespace 1: space
@@ -53,17 +55,17 @@ M.set_status0 = function()
 end
 
 M.set_status1 = function()
-	vim.w.whitespace_switch_1 = M.config.init_switches[1]
-	vim.w.whitespace_switch_2 = M.config.init_switches[2]
-	vim.w.whitespace_switch_3 = M.config.init_switches[3]
-	vim.w.whitespace_switch_4 = M.config.init_switches[4]
+	vim.w.whitespace_switch_1 = M.config.init_switches.whitespace_switch_1
+	vim.w.whitespace_switch_2 = M.config.init_switches.whitespace_switch_2
+	vim.w.whitespace_switch_3 = M.config.init_switches.whitespace_switch_3
+	vim.w.whitespace_switch_4 = M.config.init_switches.whitespace_switch_4
 end
 
 M.set_status2 = function()
-        if vim.w.whitespace_switch_1 == nil then vim.w.whitespace_switch_1 = M.config.init_switches[1] end
-        if vim.w.whitespace_switch_2 == nil then vim.w.whitespace_switch_2 = M.config.init_switches[2] end
-        if vim.w.whitespace_switch_3 == nil then vim.w.whitespace_switch_3 = M.config.init_switches[3] end
-        if vim.w.whitespace_switch_4 == nil then vim.w.whitespace_switch_4 = M.config.init_switches[4] end
+        if vim.w.whitespace_switch_1 == nil then vim.w.whitespace_switch_1 = M.config.init_switches.whitespace_switch_1 end
+        if vim.w.whitespace_switch_2 == nil then vim.w.whitespace_switch_2 = M.config.init_switches.whitespace_switch_2 end
+        if vim.w.whitespace_switch_3 == nil then vim.w.whitespace_switch_3 = M.config.init_switches.whitespace_switch_3 end
+        if vim.w.whitespace_switch_4 == nil then vim.w.whitespace_switch_4 = M.config.init_switches.whitespace_switch_4 end
 end
 
 -- # match
@@ -198,5 +200,4 @@ M.create_default_hl = function()
 end
 
 -- # return
-Whitespace = M
 return M
