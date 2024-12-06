@@ -40,13 +40,13 @@ vim.api.nvim_set_hl(0, 'Whitespace3', {link = 'CursorLine'})
 vim.api.nvim_set_hl(0, 'Whitespace4', {link = 'Error'})
 ```
 
-the `init_switches` controls whether to highlight specific type of whitespace when entering buffer
-for example, the above setup only highlight whitespace4 (which is trail) when entering buffer
+the `init_switches` controls whether to highlight specific type of whitespace when entering buffer  
+for example, the above setup only highlight whitespace4 (which is trail) when entering buffer  
 
-the highlight group of `whitespace1` is `Whitespace1`
-the highlight group of `whitespace2` is `Whitespace2`
-the highlight group of `whitespace3` is `Whitespace3`
-the highlight group of `whitespace4` is `Whitespace4`
+the highlight group of `whitespace1` is `Whitespace1`  
+the highlight group of `whitespace2` is `Whitespace2`  
+the highlight group of `whitespace3` is `Whitespace3`  
+the highlight group of `whitespace4` is `Whitespace4`  
 
 ## setup example 2:
 
