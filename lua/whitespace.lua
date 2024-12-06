@@ -46,39 +46,37 @@ M.config = {
 -- # set_status
 
 M.set_status0 = function()
-
 	vim.w.whitespace_switch_1 = nil
 	vim.w.whitespace_switch_2 = nil
 	vim.w.whitespace_switch_3 = nil
 	vim.w.whitespace_switch_4 = nil
-
-	vim.w.whitespace_insert = nil
-
 end
 
 M.set_status1 = function()
-
 	vim.w.whitespace_switch_1 = M.config.init_switches[1]
 	vim.w.whitespace_switch_2 = M.config.init_switches[2]
 	vim.w.whitespace_switch_3 = M.config.init_switches[3]
 	vim.w.whitespace_switch_4 = M.config.init_switches[4]
-
-	vim.w.whitespace_insert = (vim.api.nvim_get_mode().mode == 'i')
-
 end
 
 M.set_status2 = function()
-
         if vim.w.whitespace_switch_1 == nil then vim.w.whitespace_switch_1 = M.config.init_switches[1] end
         if vim.w.whitespace_switch_2 == nil then vim.w.whitespace_switch_2 = M.config.init_switches[2] end
         if vim.w.whitespace_switch_3 == nil then vim.w.whitespace_switch_3 = M.config.init_switches[3] end
         if vim.w.whitespace_switch_4 == nil then vim.w.whitespace_switch_4 = M.config.init_switches[4] end
-
-        if vim.w.whitespace_insert == nil then vim.w.whitespace_insert = (vim.api.nvim_get_mode().mode == 'i') end
-
 end
 
 -- # match
+
+H.insert_p = function()
+	local mode = vim.api.nvim_get_mode().mode
+	for _, insert_mode in pairs({"i", "R"}) do
+		if string.find(mode, insert_mode) then
+			return true
+		end
+	end
+	return false
+end
 
 M.match_add = function()
 	if vim.w.whitespace_switch_1 then
@@ -94,7 +92,7 @@ M.match_add = function()
 	end
 
 	if vim.w.whitespace_switch_4 then
-		if vim.w.whitespace_insert then
+		if H.insert_p() then
 			vim.w.whitespace_id_4 = vim.fn.matchadd('Whitespace4', [[\s\+\%#\@<!$]], 4)
 		else
 			vim.w.whitespace_id_4 = vim.fn.matchadd('Whitespace4', [[\s\+$]], 4)
@@ -144,9 +142,11 @@ M.create_autocmd = function()
 		{
 			group = vim.api.nvim_create_augroup('whitespace0', {clear = true}),
 			callback = function(arg)
-				if H.excluded_filetype_p() or H.excluded_buftype_p() then
-				-- `buftype=terminal` may not work now
+				----------------------------------------------------------------
+				vim.schedule(function()
 				-- https://github.com/neovim/neovim/issues/29419
+				----------------------------------------------------------------
+				if H.excluded_filetype_p() or H.excluded_buftype_p() then
 					M.set_status0()
 					M.match_sync()
 					return
@@ -162,31 +162,28 @@ M.create_autocmd = function()
 					M.match_sync()
 				end
 
-				local whitespace1_augroup = vim.api.nvim_create_augroup('whitespace1', {clear = true})
 				vim.api.nvim_create_autocmd(
 					{
 						'InsertEnter',
-					},
-					{
-						group = whitespace1_augroup,
-						buffer = arg.buf,
-						callback = function()
-							vim.w.whitespace_insert = true
-							M.match_sync()
-						end,
-					})
-				vim.api.nvim_create_autocmd(
-					{
 						'InsertLeave',
 					},
 					{
-						group = whitespace1_augroup,
+						group = vim.api.nvim_create_augroup('whitespace1', {clear = true}),
 						buffer = arg.buf,
 						callback = function()
-							vim.w.whitespace_insert = false
+							----------------------------------------------------------------
+							vim.schedule(function()
+							-- https://github.com/neovim/neovim/issues/31471
+							----------------------------------------------------------------
 							M.match_sync()
+							----------------------------------------------------------------
+							end)
+							----------------------------------------------------------------
 						end,
 					})
+				----------------------------------------------------------------
+				end)
+				----------------------------------------------------------------
 			end,
 		})
 end
