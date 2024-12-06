@@ -2,14 +2,14 @@ whitespace.nvim - highlight whitespace on demand
 
 # demo
 
-![](assets/demo.mp4)
+![](assets/demo.gif)
 
 provide 4 types of whitespace, highlight them on demand
 
 - whitespace1: space
 - whitespace2: multispace
 - whitespace3: tab
-- whitespace4: trail
+- whitespace4: trail (won't be highlighted if your cursor is placed at the end of it in insert mode, as shown in the demo)
 
 # setup
 
