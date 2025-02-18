@@ -157,7 +157,7 @@ M.create_autocmd = function()
 					},
 					{
 						group = vim.api.nvim_create_augroup('whitespace1', {clear = true}),
-						buffer = arg.buf,
+						buffer = 0,
 						callback = function()
 							----------------------------------------------------------------
 							vim.schedule(function()
