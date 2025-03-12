@@ -4,13 +4,20 @@
 
 -- test regexp
 --[=[
+
 vim.api.nvim_create_autocmd(
-	{"CursorMoved", "CursorMovedI"}, {
-	callback = function()
-		vim.fn.matchadd("test", [[\s\+\%#\@<!$]])
-	end,
-	})
+	{
+		"CursorMoved",
+		"CursorMovedI",
+	},
+	{
+		callback = function()
+			vim.fn.matchadd("test", [[\s\+\%#\@<!$]])
+		end,
+	}
+)
 vim.api.nvim_set_hl(0, "test", {link = "Error"})
+
 --]=]
 
 -- # module & help
@@ -168,12 +175,14 @@ M.create_autocmd = function()
 							end)
 							----------------------------------------------------------------
 						end,
-					})
+					}
+				)
 				----------------------------------------------------------------
 				end)
 				----------------------------------------------------------------
 			end,
-		})
+		}
+	)
 end
 
 -- # highlight
