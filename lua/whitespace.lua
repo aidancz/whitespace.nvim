@@ -5,12 +5,12 @@
 -- test regexp
 --[=[
 vim.api.nvim_create_autocmd(
-	{'CursorMoved', 'CursorMovedI'}, {
+	{"CursorMoved", "CursorMovedI"}, {
 	callback = function()
-		vim.fn.matchadd('test', [[\s\+\%#\@<!$]])
+		vim.fn.matchadd("test", [[\s\+\%#\@<!$]])
 	end,
 	})
-vim.api.nvim_set_hl(0, 'test', {link = 'Error'})
+vim.api.nvim_set_hl(0, "test", {link = "Error"})
 --]=]
 
 -- # module & help
@@ -21,7 +21,7 @@ local H = {}
 -- # setup
 
 M.setup = function(config)
-	M.config = vim.tbl_deep_extend('force', M.config, config or {})
+	M.config = vim.tbl_deep_extend("force", M.config, config or {})
 	M.create_autocmd()
 	M.create_default_hl()
 end
@@ -124,11 +124,11 @@ end
 M.create_autocmd = function()
 	vim.api.nvim_create_autocmd(
 		{
-			'BufEnter',
-			'WinEnter',
+			"BufEnter",
+			"WinEnter",
 		},
 		{
-			group = vim.api.nvim_create_augroup('whitespace0', {clear = true}),
+			group = vim.api.nvim_create_augroup("whitespace0", {clear = true}),
 			callback = function(arg)
 				----------------------------------------------------------------
 				vim.schedule(function()
@@ -152,11 +152,11 @@ M.create_autocmd = function()
 
 				vim.api.nvim_create_autocmd(
 					{
-						'InsertEnter',
-						'InsertLeave',
+						"InsertEnter",
+						"InsertLeave",
 					},
 					{
-						group = vim.api.nvim_create_augroup('whitespace1', {clear = true}),
+						group = vim.api.nvim_create_augroup("whitespace1", {clear = true}),
 						buffer = 0,
 						callback = function()
 							----------------------------------------------------------------
@@ -180,7 +180,7 @@ end
 
 M.create_default_hl = function()
 	for _, i in ipairs(M.config.definition) do
-		(load(string.format("vim.api.nvim_set_hl(0, '%s', {ctermbg = 1, bg = '#ff0000'})", i.id)))()
+		(load(string.format('vim.api.nvim_set_hl(0, "%s", {ctermbg = 1, bg = "#ff0000"})', i.id)))()
 	end
 end
 

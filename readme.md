@@ -29,7 +29,7 @@ require("whitespace").setup({
 		},
 	},
 })
-vim.api.nvim_set_hl(0, 'trail', {ctermbg = 1, bg = '#ff0000'})
+vim.api.nvim_set_hl(0, "trail", {ctermbg = 1, bg = "#ff0000"})
 ```
 
 this highlights trailing whitespaces, but it won't highlight them if the cursor is placed at the end in insert mode
